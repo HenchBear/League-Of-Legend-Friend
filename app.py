@@ -731,7 +731,7 @@ def admin_list():
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute("""SELECT id, game_name, tag_line, summoner_level, updated_at
-                           FROM players ORDER BY added_at""")
+                           FROM players ORDER BY game_name, tag_line""")
             rows = cur.fetchall()
     finally:
         conn.close()
