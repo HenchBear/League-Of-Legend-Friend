@@ -261,7 +261,7 @@ def api_members():
             top_rows = cur.fetchall()
             cur.execute("SELECT player_id, SUM(points) AS total FROM mastery GROUP BY player_id")
             total_by_player = {r["player_id"]: int(r["total"]) for r in cur.fetchall()}
-            cur.execute("SELECT v FROM app_meta WHERE k = 'last_refresh'")
+            cur.execute("SELECT to_char(v AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD HH24:MI') AS v FROM app_meta WHERE k = 'last_refresh'")
             mrow = cur.fetchone()
             refreshed_at = mrow["v"] if mrow else None
     finally:
@@ -289,7 +289,7 @@ def api_members():
                         "total": total_by_player.get(r["id"], 0),
                         "topMastery": champs})
     return jsonify({"version": ver, "members": members,
-                    "refreshedAt": refreshed_at.isoformat() if refreshed_at else None})
+                    "refreshedAt": refreshed_at})
 
 
 @app.route("/api/member/<int:pid>")
@@ -1373,7 +1373,7 @@ async function loadMembers(){
     VERSION=d.version; $('#status').style.display='none';
     MEMBERS=d.members||[];
     $('#updated').textContent = d.refreshedAt
-      ? ('마지막 전체 갱신: '+d.refreshedAt.slice(0,16).replace('T',' '))
+      ? ('마지막 전체 갱신: '+d.refreshedAt+' (KST)')
       : '아직 전체 갱신 안 됨 — 관리자 페이지에서 정보 갱신을 눌러주세요.';
     renderMembers();
   }catch(e){ $('#status').textContent='불러오기 실패'; }
