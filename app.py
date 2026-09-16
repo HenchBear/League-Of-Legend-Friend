@@ -1146,8 +1146,6 @@ PAGE = r"""
 <style>__THEME__
   .tabs{display:flex;gap:8px;margin-bottom:14px}
   .tab{padding:9px 16px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--muted);cursor:pointer}
-  .tab-link{text-decoration:none;color:var(--gold);border-color:var(--gold);display:inline-flex;align-items:center}
-  .tab-link:hover{background:var(--surface2)}
   .tab.on{background:var(--gold);color:#1a1204;border-color:var(--gold);font-weight:600}
   .updated{color:var(--muted);font-size:12px;margin:0 2px 16px}
   .row{display:flex;align-items:center;gap:14px;padding:11px 14px;border:1px solid var(--line);border-radius:11px;background:var(--surface);margin-bottom:7px}
@@ -1311,7 +1309,6 @@ PAGE = r"""
     <div class="tab" data-tab="mastery">챔피언 숙련도</div>
     <div class="tab" data-tab="ranking">랭킹</div>
     <div class="tab" data-tab="compare">결투</div>
-    <a class="tab tab-link" href="https://league-of-legend-saboteur.onrender.com/" target="_blank" rel="noopener">게임 ↗</a>
   </div>
   <div class="updated" id="updated"></div>
 
@@ -1702,7 +1699,6 @@ $('#rulesModal').addEventListener('click', e=>{ if(e.target.id==='rulesModal') c
 $('#cmpBtn').addEventListener('click', runBattle);
 
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
-  if(!t.dataset.tab) return;   // 외부 링크 탭(게임)은 새 탭 이동만
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on')); t.classList.add('on');
   backToList(); backToMembers();
   const tab=t.dataset.tab;
